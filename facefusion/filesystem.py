@@ -8,7 +8,8 @@ from pathlib import Path
 
 import facefusion.globals
 
-TEMP_DIRECTORY_PATH = os.path.join(tempfile.gettempdir(), 'facefusion')
+# TEMP_DIRECTORY_PATH = os.path.join(tempfile.gettempdir(), 'facefusion')
+TEMP_DIRECTORY_PATH = os.path.join("/content/drive/MyDrive/code/output/tmp", 'facefusion')
 TEMP_OUTPUT_VIDEO_NAME = 'temp.mp4'
 
 
