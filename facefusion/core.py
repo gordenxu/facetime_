@@ -91,7 +91,8 @@ def cli() -> None:
 	available_frame_processors = list_module_names('facefusion/processors/frame/modules')
 	program = ArgumentParser(parents = [ program ], formatter_class = program.formatter_class, add_help = True)
 	group_frame_processors = program.add_argument_group('frame processors')
-	group_frame_processors.add_argument('--frame-processors', help = wording.get('frame_processors_help').format(choices = ', '.join(available_frame_processors)), default = [ 'face_swapper','face_enhancer' ], nargs = '+')
+	#group_frame_processors.add_argument('--frame-processors', help = wording.get('frame_processors_help').format(choices = ', '.join(available_frame_processors)), default = [ 'face_swapper','face_enhancer' ], nargs = '+')
+	group_frame_processors.add_argument('--frame-processors', help = wording.get('frame_processors_help').format(choices = ', '.join(available_frame_processors)), default = [ 'face_swapper'], nargs = '+')
 	for frame_processor in available_frame_processors:
 		frame_processor_module = load_frame_processor_module(frame_processor)
 		frame_processor_module.register_args(group_frame_processors)
