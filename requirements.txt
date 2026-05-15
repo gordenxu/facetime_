@@ -1,5 +1,5 @@
-torch==2.1.0
-onnxruntime-gpu==1.16.0
+torch==2.2.0
+onnxruntime-gpu==1.17.0
 basicsr==1.4.2
 filetype==1.2.0
 gradio==3.47.1
