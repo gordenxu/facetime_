@@ -31,7 +31,9 @@ def init_face_parser(providers: List[str]) -> None:
 	global _SESSION_PARSER
 	if _SESSION_PARSER is None:
 		_SESSION_PARSER = onnxruntime.InferenceSession(
-			str(config.MODEL_FACE_PARSER), providers=providers
+			str(config.MODEL_FACE_PARSER),
+			providers=providers,
+			sess_options=config.ort_session_options(),
 		)
 
 

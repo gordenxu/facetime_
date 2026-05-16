@@ -26,7 +26,9 @@ def init_inswapper(providers: List[str]) -> None:
 	global _SESSION_SWAP, _MODEL_MATRIX
 	if _SESSION_SWAP is None:
 		_SESSION_SWAP = onnxruntime.InferenceSession(
-			str(config.MODEL_INSWAPPER), providers=providers
+			str(config.MODEL_INSWAPPER),
+			providers=providers,
+			sess_options=config.ort_session_options(),
 		)
 	if _MODEL_MATRIX is None:
 		model = onnx.load(str(config.MODEL_INSWAPPER))

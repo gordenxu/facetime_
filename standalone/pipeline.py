@@ -46,12 +46,18 @@ def _pick_providers() -> List[str]:
 	import onnxruntime
 
 	avail = onnxruntime.get_available_providers()
-	pref = [
-		'CUDAExecutionProvider',
-		'TensorrtExecutionProvider',
-		'CoreMLExecutionProvider',
-		'CPUExecutionProvider',
-	]
+	# 默认不包含 TensorRT：多数环境未安装 libnvinfer，会刷屏报错后仍回退 CUDA。
+	# 已安装 TensorRT 并配置好 LD_LIBRARY_PATH 时设：FACETIME_ORT_TENSORRT=1
+	pref: List[str] = []
+	if os.environ.get('FACETIME_ORT_TENSORRT', '').lower() in ('1', 'true', 'yes'):
+		pref.append('TensorrtExecutionProvider')
+	pref.extend(
+		[
+			'CUDAExecutionProvider',
+			'CoreMLExecutionProvider',
+			'CPUExecutionProvider',
+		]
+	)
 	chosen = [p for p in pref if p in avail]
 	return chosen or list(avail)
 
@@ -134,7 +140,7 @@ def run(
 			for _ in tqdm(as_completed(futures), total=len(futures), desc='换脸', unit='帧'):
 				_.result()
 
-		if not ffmpeg_util.merge_video(fps, frames_pattern, temp_video):
+		if not ffmpeg_util.merge_video(fps, frames_pattern, temp_video, total_frames=len(paths)):
 			print('合成视频失败')
 			return False
 

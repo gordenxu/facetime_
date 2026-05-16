@@ -30,13 +30,14 @@ def read_static_image(path: str) -> Optional[Frame]:
 
 def init_sessions(providers: List[str]) -> None:
 	global _SESSION_RETINA, _SESSION_ARC
+	opts = config.ort_session_options()
 	if _SESSION_RETINA is None:
 		_SESSION_RETINA = onnxruntime.InferenceSession(
-			str(config.MODEL_RETINA), providers=providers
+			str(config.MODEL_RETINA), providers=providers, sess_options=opts
 		)
 	if _SESSION_ARC is None:
 		_SESSION_ARC = onnxruntime.InferenceSession(
-			str(config.MODEL_ARCFACE), providers=providers
+			str(config.MODEL_ARCFACE), providers=providers, sess_options=opts
 		)
 
 
